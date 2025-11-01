@@ -1,0 +1,26 @@
+name: lgbm-gpu
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - ipykernel
+  - cmake>=3.29
+  - ninja
+  - make
+  - git
+  - gcc_linux-64
+  - gxx_linux-64
+  - opencl-headers
+  - ocl-icd
+  - scikit-build-core>=0.10  # <-- build backend LightGBM expects
+  - libgcc-ng
+  - libstdcxx-ng
+  - pip:
+      - wheel
+      - setuptools
+
