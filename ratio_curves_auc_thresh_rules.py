@@ -93,10 +93,6 @@ def apply_phys_filters(df, stage_name="Dataset"):
         
     initial_len = len(df)
     
-    # We construct a mask for items to DROP
-    # Note: If a column doesn't exist, we skip that filter to prevent errors,
-    # but we assume these columns exist based on requirements.
-    
     drop_mask = pd.Series(False, index=df.index)
     
     if 'relative_humidity' in df.columns:
