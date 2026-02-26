@@ -1,32 +1,22 @@
-#!/bin/sh
-##SBATCH --export=ALL
+#!/bin/bash
 #SBATCH -N1
-##SBATCH --nodelist=gpu018
-##SBATCH --ntasks=1
 #SBATCH --qos=long
+#SBATCH -G1
+#SBATCH --mem=120G
+#SBATCH --cpus-per-task=8
 #SBATCH --time=10-0
-#SBATCH --cpus-per-task=1
-#SBATCH -G0
-#SBATCH --mem-per-cpu=500G
+#SBATCH --output=logs/loyo_%j.out
 
-# export XLA_FLAGS=--xla_gpu_cuda_data_dir=$CONDA_PREFIX
-#export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/lib64:$LD_LIBRARY_PATH
+# --- Environment Setup ---
+source ~/.bashrc
+# conda activate your_env_name  # Uncomment and use your environment name
+export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:/usr/lib64:$LD_LIBRARY_PATH
 
-# python /home/spotter5/fire_projections/ratio_curves.py
-# python /home/spotter5/fire_projections/model_inference_thresh.py
-# python /home/spotter5/fire_projections/model_inference.py
+# Create logs directory if it doesn't exist
+mkdir -p logs
 
-# python /home/spotter5/fire_projections/ratio_curves_auc_thresh.py
-python /home/spotter5/fire_projections/parquet_to_predictors.py
+# --- Run Training ---
+# $1 is the year passed from the Python batch script
+echo "Starting Stage 2 LOYO training for year: $1"
 
-# python /home/spotter5/fire_projections/ratio_curves_balanced_auc_thresh.py
-
-
-
-
-
-
-
-
-
+python /home/spotter5/fire_projections/train_loyo_node.py --year $1
